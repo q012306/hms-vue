@@ -13,6 +13,31 @@ Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
 
+axios.defaults.withCredentials = true
+
+//使用beforeEach钩子函数判断是否拦截,在访问每一个路由前调用
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requireAuth)) {
+    axios.get('/user').then(response => {
+      if (response.data) {
+        next()
+      }else {
+        router.replace({
+          path: '/error'
+        })
+      }
+    }).catch(function (error) {
+      console.log(error);
+      router.replace({
+        path: '/error'
+      })
+    });
+  } else{
+    next()
+  }
+}
+)
+
 new Vue({
   store,
   router,

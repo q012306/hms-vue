@@ -1,37 +1,32 @@
 <template>
   <div>
-    <el-table :data="departments.filter(data => !search || data.ename.toLowerCase().includes(search.toLowerCase()))"
+    <el-table :data="randps.filter(data => !search || data.sname.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
-      <el-table-column prop="sid" label="ID 号">
+      <el-table-column prop="sid" label="员工号">
       </el-table-column>
-      <el-table-column prop="ename" label="部门名">
+      <el-table-column prop="sname" label="姓名">
       </el-table-column>
-      <el-table-column prop="emanager" label="管理人">
-      </el-table-column>
-      <el-table-column prop="eintro" label="主要职务">
+      <el-table-column prop="sremark" label="奖惩">
       </el-table-column>
       <el-table-column align="right">
         <!--eslint-disable-next-line vue/no-unused-vars-->
         <template slot="header" slot-scope="scope">
-          <el-input type="text" v-model="search" size="mini" placeholder="输入部门名关键字搜索" />
+          <el-input type="text" v-model="search" size="mini" placeholder="输入姓名关键字搜索" />
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="editDepartment(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="deleteDepartment(scope.row.sid)">删除</el-button>
+          <el-button size="mini" @click="editRandp(scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="deleteRandp(scope.row.sid)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-button style="margin:15px;float:right" type="primary" @click="editDepartment()" round>添加新部门</el-button>
+    <el-button style="margin:15px;float:right" type="primary" @click="editRandp()" round>添加新的奖惩信息</el-button>
     <el-dialog title="添加/修改" :visible.sync="editFormVisible" @close="clear">
       <el-form v-model="editForm">
-        <el-form-item label="部门名" prop="ename">
-          <el-input v-model="editForm.ename" autocomplete="off"></el-input>
+        <el-form-item label="姓名" prop="sname">
+          <el-input v-model="editForm.sname" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="管理人" prop="emanager">
-          <el-input v-model="editForm.emanager" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="主要职务" prop="eintro">
-          <el-input v-model="editForm.eintro" autocomplete="off"></el-input>
+        <el-form-item label="奖惩" prop="sremark">
+          <el-input v-model="editForm.sremark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -46,35 +41,35 @@
   export default {
     data() {
       return {
-        departments: [],
+        randps: [],
         editForm: [],
         search: "",
         editFormVisible: false
       }
     },
     mounted: function () {
-      this.loadDepartments()
+      this.loadRandps()
     },
     methods: {
-      loadDepartments() {
-        this.axios.get('/departments').then(response => {
+      loadRandps() {
+        this.axios.get('/randps').then(response => {
           if (response && response.status === 200) {
-            this.departments = response.data
+            this.randps = response.data
           }
         })
       },
-      deleteDepartment(sid) {
+      deleteRandp(sid) {
         this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.axios
-            .post('/departmentsdelete', {
+            .post('/randpsdelete', {
               sid: sid
             }).then(resp => {
               if (resp && resp.status === 200) {
-                this.loadDepartments()
+                this.loadRandps()
               }
             })
         }).catch(() => {
@@ -84,33 +79,33 @@
           })
         })
       },
-      editDepartment(department) {
+      editRandp(randp) {
         this.editFormVisible = true
-        //console.log(department.sid);
+        //console.log(randp.sid);
         this.editForm = {
-          sid: department.sid,
-          ename: department.ename,
-          emanager: department.emanager,
-          eintro: department.eintro
+          sid: randp.sid,
+          sname: randp.sname,
+
+          sremark: randp.sremark
         }
       },
       onSubmit() {
-        //console.log(this.editForm.ename);
+        //console.log(this.editForm.sname);
         this.$confirm('是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.axios
-            .post('/departments', {
+            .post('/randps', {
               sid: this.editForm.sid,
-              ename: this.editForm.ename,
-              emanager: this.editForm.emanager,
-              eintro: this.editForm.eintro
+              sname: this.editForm.sname,
+
+              sremark: this.editForm.sremark
             }).then(resp => {
               if (resp && resp.status === 200) {
                 this.editFormVisible = false
-                this.loadDepartments()
+                this.loadRandps()
               }
             })
         }).catch(() => {
@@ -123,9 +118,8 @@
       clear() {
         this.editForm = {
           sid: '',
-          ename: '',
-          emanager: '',
-          eintro: ''
+          sname: '',
+          sremark: ''
         }
       }
     }

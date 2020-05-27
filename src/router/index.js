@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import HmsIndex from '@/components/hms/HmsIndex'
 import UserIndex from '@/components/user/UserIndex'
+import Errorpage from '@/components/Errorpage'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,10 @@ Vue.use(VueRouter)
       path: '/',
       name: 'index',
       redirect: '/index',
-      component: AppIndex
+      component: AppIndex,
+      meta: {
+          requireAuth: true
+      }
     },
     {
       path: '/home',
@@ -37,12 +41,24 @@ Vue.use(VueRouter)
           name: 'UserIndex',
           component: UserIndex
         }
-      ]
+      ],
+      meta: {
+          requireAuth: true
+      }
     },
     {
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/error',
+      name: 'Errorpage',
+      component: Errorpage
+    },
+    {
+      path: "*",
+      redirect: "/error"
     }
   ]
 
