@@ -2,7 +2,7 @@
   <div>
     <el-table :data="salarys.filter(data => !search || data.sname.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
-      <el-table-column prop="sid" label="员工号">
+      <el-table-column prop="sid" label="ID 号">
       </el-table-column>
       <el-table-column prop="sname" label="姓名">
       </el-table-column>
@@ -21,7 +21,7 @@
       </el-table-column>
     </el-table>
     <el-button style="margin:15px;float:right" type="primary" @click="editSalary()" round>添加新的薪资信息</el-button>
-    <el-dialog title="添加/修改" :visible.sync="editFormVisible" @close="clear">
+    <el-dialog :append-to-body="true" title="添加/修改" :visible.sync="editFormVisible" @close="clear">
       <el-form v-model="editForm">
         <el-form-item label="姓名" prop="sname">
           <el-input v-model="editForm.sname" autocomplete="off"></el-input>

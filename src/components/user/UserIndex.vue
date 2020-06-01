@@ -51,43 +51,116 @@
       </div>
     </el-card>
 
-    <el-dialog title="申请提交" :visible.sync="editFormVisible" @close="clear">
-      <el-form v-model="personForm">
-        <el-form-item label="姓名" prop="sname">
-          <el-input v-model="personForm.sname" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="性别" prop="ssex">
-          <el-input v-model="personForm.ssex" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="生日" prop="sbirthday">
-          <el-input v-model="personForm.sbirthday" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="部门" prop="sdepartment">
-          <el-input v-model="personForm.sdepartment" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="职务" prop="sjob">
-          <el-input v-model="personForm.sjob" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="学历" prop="sedu">
-          <el-input v-model="personForm.sedu" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="技能" prop="sspcialty">
-          <el-input v-model="personForm.sspcialty" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="地区" prop="saddress">
-          <el-input v-model="personForm.saddress" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" prop="stel">
-          <el-input v-model="personForm.stel" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="semail">
-          <el-input v-model="personForm.semail" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="editFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="onSubmit">确 定</el-button>
-      </div>
+    <el-dialog :append-to-body="true" title="申请提交" :visible.sync="editFormVisible" @close="clear">
+        <el-form v-model="personForm" :inline="true">
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="姓名" prop="sname">
+                            <el-input v-model="personForm.sname" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="性别" prop="ssex">
+                        <el-select style="float:left" v-model="personForm.ssex" placeholder="请选择">
+                            <el-option v-for="item in esex"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="部门" prop="sdepartment">
+                            <el-select style="float:left" v-model="personForm.sdepartment" placeholder="请选择">
+                                <el-option v-for="item in edepartmrnts"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="职务" prop="sjob">
+                            <el-select style="float:left" v-model="personForm.sjob" placeholder="请选择">
+                                <el-option v-for="item in ejobs"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value"
+                                           :disabled="item.disabled">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="学历" prop="sedu">
+                            <el-select style="float:left" v-model="personForm.sedu" placeholder="请选择">
+                                <el-option v-for="item in eedu"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="生日" prop="sbirthday">
+                            <el-input v-model="personForm.sbirthday" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="技能" prop="sspcialty">
+                            <el-input v-model="personForm.sspcialty" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="地区" prop="saddress">
+                            <el-input v-model="personForm.saddress" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="电话" prop="stel">
+                            <el-input v-model="personForm.stel" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div>
+                        <el-form-item label="邮箱" prop="semail">
+                            <el-input v-model="personForm.semail" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="editFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="onSubmit">确 定</el-button>
+        </div>
     </el-dialog>
 
   </div>
@@ -116,7 +189,76 @@
           password: ''
         },
         DivVisible: false,
-        editFormVisible: false
+          editFormVisible: false,
+        esex: [{
+              value: '男',
+              label: '男'
+          }, {
+              value: '女',
+              label: '女'
+          }],
+          edepartmrnts: [{
+              value: '财务部',
+              label: '财务部'
+          }, {
+              value: '人事部',
+              label: '人事部'
+          }, {
+              value: '营销部',
+              label: '营销部'
+          }, {
+              value: '技术部',
+              label: '技术部'
+          }, {
+              value: '安保部',
+              label: '安保部'
+          }],
+          ejobs: [{
+              value: '员工',
+              label: '员工'
+          }, {
+              value: '人事经理',
+              label: '人事经理'
+          }, {
+              value: '财务经理',
+              label: '财务经理'
+          }, {
+              value: '营销经理',
+              label: '营销经理'
+          }, {
+              value: '技术经理',
+              label: '技术经理'
+          }, {
+              value: '安保经理',
+              label: '安保经理'
+          }, {
+              value: '董事长',
+              label: '董事长',
+              disabled: true
+          }],
+          eedu: [{
+              value: '小学',
+              label: '小学'
+          }, {
+              value: '初中',
+              label: '初中'
+          }, {
+              value: '高中',
+              label: '高中'
+          }, {
+              value: '大专',
+              label: '大专'
+          }, {
+              value: '本科',
+              label: '本科'
+          }, {
+              value: '硕士',
+              label: '硕士'
+          }, {
+              value: '博士',
+              label: '博士'
+          }],
+          value: ''
       }
     },
     mounted: function () {

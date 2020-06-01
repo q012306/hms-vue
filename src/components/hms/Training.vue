@@ -20,7 +20,7 @@
             </el-table-column>
         </el-table>
         <el-button style="margin:15px;float:right" type="primary" @click="editTraining()" round>添加培训计划</el-button>
-        <el-dialog title="添加/修改" :visible.sync="editFormVisible" @close="clear">
+        <el-dialog :append-to-body="true" title="添加/修改" :visible.sync="editFormVisible" @close="clear">
             <el-form v-model="editForm">
                 <el-form-item label="姓名" prop="sname">
                     <el-input v-model="editForm.sname" autocomplete="off"></el-input>

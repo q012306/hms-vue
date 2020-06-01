@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table :data="person.filter(data => !search || data.sname.toLowerCase().includes(search.toLowerCase()))"
-                  style="width: 100%">
+                  style="width: 100%" max-height="750">
             <el-table-column prop="sid"
                              label="ID 号">
             </el-table-column>
@@ -53,7 +53,7 @@
             </el-table-column>
         </el-table>
         <el-button style="margin:15px;float:right" type="primary" @click="editPerson()" round>添加新员工</el-button>
-        <el-dialog title="添加/修改" :visible.sync="editFormVisible" @close="clear">
+        <el-dialog :append-to-body="true" title="添加/修改" :visible.sync="editFormVisible" @close="clear">
             <el-form v-model="editForm" :inline="true">
                 <el-row :gutter="20" >
                     <el-col :span="12">
@@ -204,6 +204,9 @@
           }, {
               value: '人事经理',
               label: '人事经理'
+          }, {
+              value: '财务经理',
+              label: '财务经理'
           }, {
               value: '营销经理',
               label: '营销经理'

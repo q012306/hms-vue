@@ -22,7 +22,7 @@
       </el-table-column>
     </el-table>
     <el-button style="margin:15px;float:right" type="primary" @click="editDepartment()" round>添加新部门</el-button>
-    <el-dialog title="添加/修改" :visible.sync="editFormVisible" @close="clear">
+    <el-dialog :append-to-body="true" title="添加/修改" :visible.sync="editFormVisible" @close="clear">
       <el-form v-model="editForm">
         <el-form-item label="部门名" prop="ename">
           <el-input v-model="editForm.ename" autocomplete="off"></el-input>

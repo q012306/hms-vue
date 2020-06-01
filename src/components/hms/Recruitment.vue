@@ -56,7 +56,7 @@
             </el-table-column>
         </el-table>
         <el-button style="margin:15px;float:right" type="primary" @click="editRecruitment()" round>添加入职申请</el-button>
-        <el-dialog title="添加/修改" :visible.sync="editFormVisible" @close="clear">
+        <el-dialog :append-to-body="true" title="添加/修改" :visible.sync="editFormVisible" @close="clear">
             <el-form v-model="editForm" :inline="true">
                 <el-row :gutter="20" >
                     <el-col :span="12">

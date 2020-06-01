@@ -64,7 +64,16 @@
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
+              this.$message({
+                message: '登录成功！',
+                type: 'success'
+              });
               this.$router.replace({path: '/index'})
+            }else if(successResponse.data.code === 400){
+              this.$message({
+                message: '用户名密码错误，登陆失败！',
+                type: 'warning'
+              });
             }
           })
           // eslint-disable-next-line no-unused-vars
@@ -80,6 +89,15 @@
           .then(successResponse => {
             if (successResponse.data.code === 200) {
               this.editFormVisible = false;
+              this.$message({
+                message: '注册成功！',
+                type: 'success'
+              });
+            }else if(successResponse.data.code === 400){
+              this.$message({
+                message: '注册失败！',
+                type: 'warning'
+              });
             }
           })
           // eslint-disable-next-line no-unused-vars
